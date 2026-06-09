@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Taxímetro" />
+  <meta name="description" content="Calculadora de tarifa con descuento para taxistas" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>Taxímetro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <header class="header">
+      <div class="header-icon">🚕</div>
+      <div class="header-text">
+        <h1>Taxímetro</h1>
+        <p>Calculá tu tarifa al instante</p>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <section class="card input-card">
+        <label class="label" for="monto">Monto en tickeadora</label>
+        <div class="input-wrapper">
+          <span class="currency">$</span>
+          <input
+            type="number"
+            id="monto"
+            inputmode="decimal"
+            placeholder="0.00"
+            autocomplete="off"
+            step="0.01"
+            min="0"
+          />
+        </div>
+      </section>
+
+      <section class="card result-card" id="resultCard">
+        <div class="result-label">Cobrarle al pasajero</div>
+        <div class="result-amount" id="resultAmount">—</div>
+        <div class="result-detail" id="resultDetail"></div>
+        <button class="btn-copy" id="btnCopy" style="display:none" onclick="copiarMonto()">
+          Copiar monto
+        </button>
+      </section>
+
+      <section class="card info-card">
+        <div class="info-row">
+          <span class="info-icon">🏷️</span>
+          <span>Descuento aplicado: <strong>20%</strong></span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">⚡</span>
+          <span>El resultado se actualiza mientras escribís</span>
+        </div>
+      </section>
+
+      <button class="btn-clear" id="btnClear" onclick="limpiar()">Limpiar</button>
+
+    </main>
+
+    <footer class="footer">
+      <p>Buen viaje 🛣️</p>
+    </footer>
+
+  </div>
+
+  <div class="toast" id="toast">¡Copiado!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

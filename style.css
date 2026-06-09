@@ -1,0 +1,305 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0f1a;
+  --bg-card: #1a1a2e;
+  --bg-card2: #16213e;
+  --accent: #f5c518;
+  --accent-dim: #c9a010;
+  --text: #f0f0f0;
+  --text-muted: #8888aa;
+  --green: #2ecc71;
+  --green-dim: #27ae60;
+  --red: #e74c3c;
+  --radius: 18px;
+  --radius-sm: 10px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== APP SHELL ===== */
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 32px 4px 20px;
+}
+
+.header-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(245,197,24,0.4));
+}
+
+.header-text h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+.header-text p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ===== INPUT CARD ===== */
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(245,197,24,0.25);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--accent);
+  background: rgba(245,197,24,0.05);
+}
+
+.currency {
+  padding: 0 4px 0 18px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+input#monto {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding: 16px 18px 16px 8px;
+  width: 100%;
+  font-family: inherit;
+  letter-spacing: -0.5px;
+}
+
+input#monto::placeholder {
+  color: rgba(255,255,255,0.15);
+}
+
+/* Remove number input arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+/* ===== RESULT CARD ===== */
+.result-card {
+  background: var(--bg-card2);
+  border: 1px solid rgba(46,204,113,0.15);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.result-card.has-value {
+  border-color: rgba(46,204,113,0.4);
+  background: linear-gradient(135deg, #0d2318 0%, #162b20 100%);
+}
+
+.result-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.result-amount {
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  color: var(--text-muted);
+  line-height: 1;
+  transition: all 0.25s ease;
+  min-height: 1.2em;
+}
+
+.result-card.has-value .result-amount {
+  color: var(--green);
+  text-shadow: 0 0 24px rgba(46,204,113,0.3);
+}
+
+.result-amount .prefix {
+  font-size: 1.8rem;
+  font-weight: 700;
+  vertical-align: super;
+  margin-right: 4px;
+}
+
+.result-detail {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+/* ===== COPY BUTTON ===== */
+.btn-copy {
+  margin-top: 16px;
+  background: rgba(46,204,113,0.15);
+  border: 1px solid rgba(46,204,113,0.3);
+  color: var(--green);
+  border-radius: var(--radius-sm);
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+}
+
+.btn-copy:active {
+  transform: scale(0.97);
+  background: rgba(46,204,113,0.25);
+}
+
+/* ===== INFO CARD ===== */
+.info-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.08);
+  padding: 16px 20px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  padding: 4px 0;
+}
+
+.info-row + .info-row {
+  margin-top: 6px;
+}
+
+.info-icon { font-size: 1rem; }
+.info-row strong { color: var(--text); }
+
+/* ===== CLEAR BUTTON ===== */
+.btn-clear {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  margin-top: 4px;
+}
+
+.btn-clear:active {
+  transform: scale(0.97);
+  background: rgba(231,76,60,0.1);
+  color: var(--red);
+  border-color: rgba(231,76,60,0.3);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  margin-top: auto;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 0.05em;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--green);
+  color: #0a1f0a;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 24px;
+  border-radius: 50px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.result-amount.pop {
+  animation: pop 0.2s ease;
+}
+
+/* ===== SAFE AREA (iPhone notch etc.) ===== */
+.app {
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}

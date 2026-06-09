@@ -8,6 +8,43 @@ const resultAmount = document.getElementById('resultAmount');
 const resultDetail = document.getElementById('resultDetail');
 const btnCopy      = document.getElementById('btnCopy');
 const toast        = document.getElementById('toast');
+const btnTheme     = document.getElementById('btnTheme');
+const themeIcon    = document.getElementById('themeIcon');
+const metaTheme    = document.getElementById('metaThemeColor');
+
+/* ===== TEMA CLARO / OSCURO ===== */
+function getStoredTheme() {
+  try { return localStorage.getItem('taximetro-theme'); } catch { return null; }
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+
+  // Actualizar meta theme-color para que la barra del navegador combine
+  if (metaTheme) {
+    metaTheme.setAttribute('content', theme === 'light' ? '#f2f2f7' : '#1a1a2e');
+  }
+
+  try { localStorage.setItem('taximetro-theme', theme); } catch {}
+}
+
+// Inicializar tema: preferencia guardada → preferencia del sistema → oscuro
+(function initTheme() {
+  const stored = getStoredTheme();
+  if (stored) {
+    setTheme(stored);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    setTheme('light');
+  } else {
+    setTheme('dark');
+  }
+})();
+
+btnTheme.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  setTheme(current === 'dark' ? 'light' : 'dark');
+});
 
 /* ===== LÓGICA PRINCIPAL ===== */
 inputMonto.addEventListener('input', calcular);
@@ -96,7 +133,19 @@ function formatearPesos(num) {
 /* ===== SERVICE WORKER ===== */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        // Forzar actualización si hay un SW nuevo
+        reg.addEventListener('updatefound', () => {
+          const newSW = reg.installing;
+          newSW.addEventListener('statechange', () => {
+            if (newSW.state === 'activated') {
+              window.location.reload();
+            }
+          });
+        });
+      })
+      .catch(() => {});
   });
 }
 

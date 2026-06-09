@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#1a1a2e" />
+  <meta name="theme-color" content="#1a1a2e" id="metaThemeColor" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Taxímetro" />
   <meta name="description" content="Calculadora de tarifa con descuento para taxistas" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
   <title>Taxímetro</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <div class="app">
@@ -22,6 +22,9 @@
         <h1>Taxímetro</h1>
         <p>Calculá tu tarifa al instante</p>
       </div>
+      <button class="btn-theme" id="btnTheme" aria-label="Cambiar tema" title="Cambiar tema">
+        <span class="theme-icon" id="themeIcon">☀️</span>
+      </button>
     </header>
 
     <main class="main">
@@ -74,6 +77,6 @@
 
   <div class="toast" id="toast">¡Copiado!</div>
 
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>

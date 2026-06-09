@@ -65,7 +65,39 @@
         </div>
       </section>
 
-      <button class="btn-clear" id="btnClear" onclick="limpiar()">Limpiar</button>
+      <button class="btn-clear" id="btnClear" onclick="registrarYLimpiar()">Registrar viaje</button>
+
+      <section class="card history-card" id="historyCard">
+        <div class="history-header" id="historyHeader">
+          <div class="history-title">
+            <span class="history-icon">📋</span>
+            <span>Historial de viajes</span>
+            <span class="history-badge" id="historyBadge">0</span>
+          </div>
+          <span class="history-toggle" id="historyToggle">▼</span>
+        </div>
+
+        <div class="history-body" id="historyBody">
+          <div class="history-summary" id="historySummary" style="display:none">
+            <div class="summary-item">
+              <span class="summary-label">Viajes hoy</span>
+              <span class="summary-value" id="summaryTrips">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Total cobrado</span>
+              <span class="summary-value summary-total" id="summaryTotal">$0,00</span>
+            </div>
+          </div>
+
+          <ul class="history-list" id="historyList">
+            <li class="history-empty" id="historyEmpty">Sin viajes registrados aún</li>
+          </ul>
+
+          <button class="btn-clear-history" id="btnClearHistory" onclick="limpiarHistorial()" style="display:none">
+            🗑️ Borrar historial
+          </button>
+        </div>
+      </section>
 
     </main>
 

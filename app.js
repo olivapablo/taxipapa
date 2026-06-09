@@ -91,6 +91,132 @@ function limpiar() {
   inputMonto.focus();
 }
 
+/* ===== HISTORIAL DE VIAJES ===== */
+const HISTORY_KEY = 'taximetro-historial';
+const historyCard   = document.getElementById('historyCard');
+const historyHeader = document.getElementById('historyHeader');
+const historyBody   = document.getElementById('historyBody');
+const historyList   = document.getElementById('historyList');
+const historyEmpty  = document.getElementById('historyEmpty');
+const historyBadge  = document.getElementById('historyBadge');
+const historySummary = document.getElementById('historySummary');
+const summaryTrips  = document.getElementById('summaryTrips');
+const summaryTotal  = document.getElementById('summaryTotal');
+const btnClearHist  = document.getElementById('btnClearHistory');
+
+function getHistorial() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  } catch { return []; }
+}
+
+function saveHistorial(trips) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(trips)); } catch {}
+}
+
+function registrarYLimpiar() {
+  const raw = parseFloat(inputMonto.value);
+  if (!inputMonto.value || isNaN(raw) || raw <= 0) {
+    // Si no hay monto, solo limpiar
+    limpiar();
+    return;
+  }
+
+  const cobrar = raw * (1 - DESCUENTO);
+  const ahora = new Date();
+
+  const trip = {
+    id: Date.now(),
+    montoTickeadora: raw,
+    montoCobrado: cobrar,
+    fecha: ahora.toISOString()
+  };
+
+  const trips = getHistorial();
+  trips.unshift(trip); // Más reciente primero
+  saveHistorial(trips);
+
+  limpiar();
+  renderHistorial();
+  mostrarToast('✅ Viaje registrado');
+
+  // Abrir el historial si estaba cerrado para que se vea
+  if (!historyCard.classList.contains('open')) {
+    historyCard.classList.add('open');
+  }
+}
+
+function renderHistorial() {
+  const trips = getHistorial();
+  const total = trips.length;
+
+  historyBadge.textContent = total;
+
+  if (total === 0) {
+    historyEmpty.style.display = '';
+    historySummary.style.display = 'none';
+    btnClearHist.style.display = 'none';
+    // Limpiar items previos (dejar solo el empty)
+    historyList.querySelectorAll('.history-item').forEach(el => el.remove());
+    return;
+  }
+
+  historyEmpty.style.display = 'none';
+  historySummary.style.display = '';
+  btnClearHist.style.display = '';
+
+  // Resumen del día
+  const hoy = new Date().toDateString();
+  const tripsHoy = trips.filter(t => new Date(t.fecha).toDateString() === hoy);
+  const totalCobradoHoy = tripsHoy.reduce((sum, t) => sum + t.montoCobrado, 0);
+
+  summaryTrips.textContent = tripsHoy.length;
+  summaryTotal.textContent = '$' + formatearPesos(totalCobradoHoy);
+
+  // Renderizar lista
+  historyList.querySelectorAll('.history-item').forEach(el => el.remove());
+
+  trips.forEach((trip, i) => {
+    const li = document.createElement('li');
+    li.className = 'history-item';
+    li.style.animationDelay = `${Math.min(i * 0.04, 0.3)}s`;
+
+    const fecha = new Date(trip.fecha);
+    const hora = fecha.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+    const fechaCorta = fecha.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+    const esHoy = fecha.toDateString() === hoy;
+
+    li.innerHTML = `
+      <div class="trip-number">${total - i}</div>
+      <div class="trip-info">
+        <div class="trip-amount">$${formatearPesos(trip.montoCobrado)}</div>
+        <div class="trip-detail">Tickeadora $${formatearPesos(trip.montoTickeadora)} − 20%</div>
+      </div>
+      <div class="trip-time">
+        <span class="trip-time-hour">${hora}</span>
+        ${esHoy ? 'Hoy' : fechaCorta}
+      </div>
+    `;
+
+    historyList.appendChild(li);
+  });
+}
+
+function limpiarHistorial() {
+  if (!confirm('¿Borrar todo el historial de viajes?')) return;
+  saveHistorial([]);
+  renderHistorial();
+  mostrarToast('🗑️ Historial borrado');
+}
+
+// Toggle del historial
+historyHeader.addEventListener('click', () => {
+  historyCard.classList.toggle('open');
+});
+
+// Cargar historial al iniciar
+renderHistorial();
+
 /* ===== COPIAR AL PORTAPAPELES ===== */
 function copiarMonto() {
   const raw = parseFloat(inputMonto.value);

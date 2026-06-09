@@ -31,17 +31,22 @@
 
       <section class="card input-card">
         <label class="label" for="monto">Monto en tickeadora</label>
-        <div class="input-wrapper">
-          <span class="currency">$</span>
-          <input
-            type="number"
-            id="monto"
-            inputmode="decimal"
-            placeholder="0.00"
-            autocomplete="off"
-            step="0.01"
-            min="0"
-          />
+        <div class="input-row">
+          <div class="input-wrapper">
+            <span class="currency">$</span>
+            <input
+              type="number"
+              id="monto"
+              inputmode="decimal"
+              placeholder="0.00"
+              autocomplete="off"
+              step="0.01"
+              min="0"
+            />
+          </div>
+          <button class="btn-confirm" id="btnConfirm" aria-label="Calcular descuento" title="Calcular descuento">
+            ✓
+          </button>
         </div>
       </section>
 
@@ -61,11 +66,11 @@
         </div>
         <div class="info-row">
           <span class="info-icon">⚡</span>
-          <span>El resultado se actualiza mientras escribís</span>
+          <span>Ingresá el monto y tocá <strong>✓</strong> para calcular</span>
         </div>
       </section>
 
-      <button class="btn-clear" id="btnClear" onclick="registrarYLimpiar()">Registrar viaje</button>
+      <button class="btn-clear" id="btnClear" onclick="limpiar()">Limpiar campos</button>
 
       <section class="card history-card" id="historyCard">
         <div class="history-header" id="historyHeader">
@@ -86,6 +91,19 @@
             <div class="summary-item">
               <span class="summary-label">Total cobrado</span>
               <span class="summary-value summary-total" id="summaryTotal">$0,00</span>
+            </div>
+          </div>
+
+          <div class="history-filters" id="historyFilters" style="display:none">
+            <div class="filter-pills">
+              <button class="filter-pill active" data-filter="hoy">Hoy</button>
+              <button class="filter-pill" data-filter="ayer">Ayer</button>
+              <button class="filter-pill" data-filter="semana">Semana</button>
+              <button class="filter-pill" data-filter="todos">Todos</button>
+            </div>
+            <div class="filter-date-row">
+              <label class="filter-date-label" for="filterDate">📅 Fecha específica</label>
+              <input type="date" id="filterDate" class="filter-date-input" />
             </div>
           </div>
 

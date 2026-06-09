@@ -197,6 +197,50 @@ html, body {
   background: var(--input-focus-bg);
 }
 
+/* --- Input row with confirm button --- */
+.input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.input-row .input-wrapper {
+  flex: 1;
+}
+
+.btn-confirm {
+  width: 58px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #0f0f1a;
+  font-size: 1.6rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(245,197,24,0.3);
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-theme="light"] .btn-confirm {
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(212,168,14,0.25);
+}
+
+.btn-confirm:hover {
+  box-shadow: 0 4px 20px rgba(245,197,24,0.5);
+}
+
+.btn-confirm:active {
+  transform: scale(0.93);
+  background: var(--accent-dim);
+}
+
 .currency {
   padding: 0 4px 0 18px;
   font-size: 1.8rem;
@@ -421,7 +465,85 @@ input[type=number] { -moz-appearance: textfield; }
 }
 
 .history-card.open .history-body {
-  max-height: 600px;
+  max-height: 800px;
+}
+
+/* --- Date filter --- */
+.history-filters {
+  padding: 12px 20px 14px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.filter-pill {
+  flex: 1;
+  padding: 7px 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+
+.filter-pill.active {
+  background: var(--accent);
+  color: #0f0f1a;
+  border-color: var(--accent);
+}
+
+[data-theme="light"] .filter-pill.active {
+  color: #ffffff;
+}
+
+.filter-pill:not(.active):active {
+  background: var(--input-bg);
+}
+
+.filter-date-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-date-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.35s ease;
+}
+
+.filter-date-input {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-family: inherit;
+  padding: 7px 10px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, color 0.35s ease;
+  color-scheme: dark;
+}
+
+[data-theme="light"] .filter-date-input {
+  color-scheme: light;
+}
+
+.filter-date-input:focus {
+  border-color: var(--accent);
 }
 
 /* --- Summary --- */
